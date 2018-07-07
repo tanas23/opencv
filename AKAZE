@@ -1,0 +1,32 @@
+//Version//opecv3.41  
+//AKAZE//
+
+#include "stdafx.h"                     
+#include <opencv2/opencv.hpp>    
+#pragma comment(lib, "opencv_world341d.lib")      // OpenCVlibrary
+using namespace std;                    
+using namespace cv;                     
+
+int main()                              
+{
+	Mat image_src = imread("FILENAME.bmp", IMREAD_GRAYSCALE);
+	namedWindow("originalpicture");
+	imshow("orignalpicture", image_src);
+	vector<KeyPoint> keypoint1, keypoint2;
+
+	Mat descriptor1, descriptor2;
+	Ptr<AKAZE>feature = AKAZE::create();
+	feature->detectAndCompute(image_src, noArray(), keypoint1, keypoint1);
+	feature->detectAndCompute(image_src, noArray(), keypoint2, keypoint2);
+	
+	
+
+	Mat image_akaze;
+	
+	namedWindow("AKAZE画像(default)");
+	imshow("AKAZE画像(default)", image_akaze);
+
+	waitKey(0);   
+	destroyAllWindows();
+	return 0;
+}
