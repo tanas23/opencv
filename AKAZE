@@ -23,8 +23,8 @@ int main()
 
 	Mat image_akaze;
 	
-	namedWindow("AKAZE画像(default)");
-	imshow("AKAZE画像(default)", image_akaze);
+	namedWindow("AKAZEpicture(default)");
+	imshow("AKAZEpicture(default)", image_akaze);
 
 	waitKey(0);   
 	destroyAllWindows();
