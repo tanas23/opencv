@@ -1,0 +1,44 @@
+#include "stdafx.h"
+#include <opencv2/opencv.hpp>
+#pragma comment(lib, "opencv_world341d.lib")
+using namespace std;
+using namespace cv;
+
+int main()
+{
+  
+  Mat src = imread("ファイルネーム.bmp");
+  namedWindow("入力映像");
+
+  vector<string> cName{ "青", "緑", "赤" };
+  vector<Scalar> cScalar{ Scalar(255, 0, 0), Scalar(0, 255, 0), Scalar(0, 0, 255) };
+  Mat hist(Size(256, 256), CV_8UC3);
+
+  while (1) {
+	  if (src.empty()) break;
+	  imshow("入力映像", src);
+	  vector<Mat> ch(3);
+	  split(src, ch);
+
+	  vector<int> size{ 256 };     
+	  vector<float> range{ 0, 256 };         
+	  hist.setTo(255);
+	  for (int c = 0; c < 3; c++) {
+		  vector<int> channel{ c };        
+		  Mat bins;
+		  calcHist(ch, channel, noArray(), bins, size, range);
+		  Point prev = Point(0, 255);
+		  for (int x = 0; x < 256; x++) {                   
+			  Point current = Point(x, 256 - (int)(bins.at<float>(x) / 50));
+			  line(hist, prev, current, cScalar[c]);
+			  prev = current;
+		  }
+	  }
+	  imshow("ヒストグラム", hist);
+
+	  if (waitKey(50) == 27) break;
+
+	  imwrite("保存ファイルネーム.bmp", hist);
+  }
+  return 0;
+}
