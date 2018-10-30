@@ -1,0 +1,7 @@
+# opencv
+
+使用OS：     Windows10 64bit
+エディタ：   Visual Studio 2017
+ライブラリ： Opencv3.4.1
+使用言語：    C++
+推奨画像：   256*256
